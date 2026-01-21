@@ -31,7 +31,7 @@ This quick start guide demonstrates how to infer InfiniCube pipeline with trajec
    - `checkpoints/video_generation.safetensors` - Video generation model
    - `checkpoints/gsm_vs02_res512_view1_dual_branch_sky_mlp_modulator.ckpt` - Gaussian splatting model
    - `models/Wan-AI/Wan2.1-T2V-1.3B` - checkpoints required for wan 2.1 1.3B, please run `python infinicube/videogen/download_checkpoint.py` to download them.
-3. **Input Data Sample**: [Download](https://huggingface.co/yifanlu/InfiniCube-data-sample) the data sample for inference, move the `data_sample/data` folder outside as `<InfiniCube-repo>/data`.
+3. **Input Data Sample**: [Download](https://huggingface.co/datasets/yifanlu/InfiniCube-data-sample) the data sample for inference, move the `data_sample/data` folder outside as `<InfiniCube-repo>/data`.
 
 ### Step 1: Voxel World Generation
 
