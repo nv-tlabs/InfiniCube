@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["infinicube*"]
+
+[project]
+name = "infinicube"
+version = "0.1.0"
+requires-python = ">=3.10"
+# Common dependencies shared by both environments
+dependencies = [
+    "tqdm",
+    "numpy<2.0.0",
+    "scipy",
+    "webdataset",
+    "line-profiler",
+    "imageio[ffmpeg]",
+    "opencv_python_headless",
+    "decord",
+]
+
+# Console scripts entry points
+[project.scripts]
+vis-grid = "infinicube.visualize.visualize_grid:main"
+vis-wds = "infinicube.visualize.webdataset_data:main"
+vis-compare = "infinicube.visualize.visualize_grid_compare:main"
+vis-dynamic = "infinicube.visualize.visualize_dynamic_gaussians:main"
+
+# Optional dependency groups: completely separate main and waymo environments
+[project.optional-dependencies]
+# Main environment: PyTorch ecosystem and all core development dependencies
+main = [
+    "torch==2.2.0",
+    "torchvision==0.17.0",
+    "pytorch-lightning==1.9.4",
+    "torch-scatter",
+    "tensorboard",
+    "matplotlib",
+    "pandas",
+    "rich",
+    "pytest-benchmark",
+    "omegaconf",
+    "scikit-image",
+    "flatten-dict",
+    "scikit-learn",
+    "wandb==0.16.6",
+    "transformers",
+    "ffmpeg-python",
+    "linkify-it-py",
+    "python-pycg",
+    "point_cloud_utils==0.29.5",
+    "loguru",
+    "randomname",
+    "einops",
+    "nvidia-ml-py",
+    "polyscope",
+    "trimesh",
+    "icecream",
+    "boto3",
+    "viser",
+    "mediapy",
+    "scikit-spatial",
+    "ftfy",
+    "openmim",
+    "timm",
+    "termcolor",
+    "gsplat @ https://github.com/nerfstudio-project/gsplat/releases/download/v1.4.0/gsplat-1.4.0%2Bpt22cu121-cp310-cp310-linux_x86_64.whl",
+    "fvdb @ https://research.nvidia.com/labs/toronto-ai/infinicube/wheels/fvdb-0.2.0+pt22cu121-cp310-cp310-linux_x86_64.whl",
+    "diffsynth @ git+https://github.com/yifanlu0227/DiffSynth-Studio-InfiniCube",
+    "open3d-pycg-cpu",
+    "x-unet",
+    'lpips',
+    "qwen-vl-utils"
+]
+
+# Waymo environment: only waymo-related dependencies and necessary utilities
+waymo = [
+    "waymo-open-dataset-tf-2-11-0==1.6.1",
+    "gdown",
+    "pyquaternion",
+]
+
+# Development environment: code formatting and linting tools
+dev = [
+    "ruff",
+]
+
+
+# UV configuration for package sources and links
+[tool.uv]
+find-links = [
+    "https://download.pytorch.org/whl/cu121",
+    "https://data.pyg.org/whl/torch-2.2.0+cu121.html",
+]
+
+
+# ruff configuration
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+fixable = ["ALL"]

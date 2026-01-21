@@ -1,0 +1,29 @@
+Copyright 2025 NVIDIA CORPORATION & AFFILIATES.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+---
+
+### Additional License for Pre-trained Weights
+
+The source code in this repository is licensed under the Apache License 2.0. 
+However, any pre-trained weights provided in this repository or via external links 
+were trained using the Waymo Open Dataset. 
+
+As a derivative work of the Waymo Open Dataset, these weights are subject to the 
+"Waymo Dataset License Agreement for Non-Commercial Use (March 2025)". 
+By downloading or using these weights, you agree to comply with Waymo's terms, 
+which include, but are not limited to:
+- Use for **Non-Commercial purposes only**.
+- No redistribution of the weights except as permitted by Waymo's terms.
+- Compliance with all other restrictions outlined at: https://waymo.com/open/terms/

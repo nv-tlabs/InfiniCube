@@ -1,0 +1,49 @@
+backbone:
+  target: DualBranchUNet
+  params:
+    use_3d: false
+    use_2d: false
+
+    backbone_3d_target: Pure3DUnet
+    backbone_3d_params: 
+      lifter_params:
+        img_feature_source: conv
+        img_in_dim: 64
+        voxel_out_dim: 64
+
+      img_feature_source: conv
+      in_channels: 64
+      num_blocks: 3
+      f_maps: 64
+      f_maps_2d: 64
+      neck_dense_type: "UNCHANGED"
+      neck_bound: [128, 128, 32] # ! useless
+      use_attention: false
+      gs_enhanced: "original"
+      gsplat_upsample: 4
+      occ_upsample: 2
+      max_scaling: 1
+      max_return: 1
+      feature_pooling_2d: "max"
+
+    backbone_2d_params:
+      znear: 0.5
+      zfar: 300
+      max_scale: 0.1
+      interpret_output_depth: weight
+      feature_source: original_rgb
+      concat_depth_priors: ['dav2_feature', 'masked_voxel_depth']
+      masked_voxel_depth_params:
+        patch_size: 16
+        mask_prob: 0.5
+      gs_per_pixel: 2
+      gs_dim: 12
+      unet2d_params:
+        channels: 36
+        init_dim: 32
+        dim: 32
+        out_dim: 24
+        dim_mults: [1, 2, 4, 8]
+        num_blocks_per_stage: [2, 2, 2, 2]
+        num_self_attn_per_stage: [0, 0, 0, 0]
+        consolidate_upsample_fmaps: true

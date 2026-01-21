@@ -1,0 +1,19 @@
+name: infini
+# only provide base environment like cuda, gcc, cmake
+# we will build real environment with uv
+
+channels:
+  - conda-forge
+  - nvidia
+
+dependencies:
+  - python=3.10
+  - cuda-toolkit=12.1 
+  - gcc_linux-64=11
+  - gxx_linux-64=11
+  - cmake
+  - make
+  - ninja
+  - ffmpeg
+  - pip
+  - uv

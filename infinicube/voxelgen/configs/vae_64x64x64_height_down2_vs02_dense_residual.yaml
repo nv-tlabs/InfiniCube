@@ -1,0 +1,54 @@
+include_configs:
+  - ./train/vae/vae_16x16x16_dense_residual.yaml
+  - dataset.yaml
+
+name: 'release/waymo_wds'
+
+# data
+batch_size: 1
+train_kwargs: # vae can use dynamic scenes
+  wds_scene_list_file: "infinicube/assets/waymo_split/official_train_w_dynamic_w_ego_motion_gt_30m_good_voxel.json" 
+val_kwargs:
+  wds_scene_list_file: "infinicube/assets/waymo_split/official_val_w_dynamic_w_ego_motion_gt_30m_good_voxel.json"
+
+accumulate_grad_batches: 8
+voxel_size: 0.2
+use_fvdb_loader: true
+_fvdb_grid_type: 'vs02'
+finest_voxel_size_goal: 'vs02'
+_input_slect_ids: [0]
+_input_frame_offsets: [0]
+_sup_slect_ids: [0]
+_sup_frame_offsets: [0]
+grid_crop_bbox_min: [-25.6, -25.6, -6.4]
+grid_crop_bbox_max: [25.6, 25.6, 19.2]
+grid_crop_augment: true
+grid_crop_augment_range: [3.2, 3.2, 0.8]
+replace_all_car_with_cad: true
+
+
+# adjust input setting - use semantic and intensity
+use_input_normal: false
+use_input_semantic: true
+use_input_intensity: false
+num_semantic: 23
+dim_semantic: 32
+
+
+# adjust supervision - add semantic supervision
+supervision:
+  semantic_weight: 20.0
+  normal_weight: 0
+
+# adjust network
+cut_ratio: 32
+remain_h: true
+use_hash_tree: false # use_hash_tree conflict with remain_h
+tree_depth: 3
+
+network:
+  unet:
+    params:
+      neck_bound: [32, 32, 32] 
+      pooling_level: [2]
+      neck_dense_type: "HAND_CRAFTED"

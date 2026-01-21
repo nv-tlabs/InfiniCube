@@ -1,0 +1,65 @@
+tree_depth: 4 # ! useless in this setting but may need later
+voxel_size: 0.1
+
+# data loader
+duplicate_num: 1
+pin_memory: false
+batch_size: 1
+test_set_shuffle: false
+keep_surface_voxels: false
+
+clip_input_grid: false
+coarsen_input_grid: false
+accumulate_grad_batches: 4
+voxel_maximum: -1
+
+# ! gaussian splatting
+render_alpha: true
+render_weight: 1.0
+alpha_weight: 1.0
+depth_weight: 0.0
+render_background: "black"
+perceptual_weight: 0.0
+use_ssim_loss: true
+perceptual_start_epoch: 20
+use_input_color: false # ! need to change to true or image input
+gsplat_upsample: 1
+gs_free_space: "hard"
+use_alex_metric: true
+
+gsplat_params:
+  radius_clip: 0.0
+  rasterize_mode: classic
+  absgrad: false
+  force_float32: true
+
+# !: Testing
+use_checkpoint: false
+
+supervision:
+  structure_weight: 0.0
+  render_weight: ${render_weight} # !: added for color 
+  alpha_weight: ${alpha_weight} # !: added for mask
+  depth_weight: ${depth_weight} # !: added for depth
+  depth_supervision_format: l1
+  
+optimizer: "Adam"
+learning_rate:
+  init: 1.0e-4
+  decay_mult: 1.0
+  decay_step: 2000000000 # ! make sure it is not trigged
+  clip: 1.0e-6
+weight_decay: 0.0
+grad_clip: 0.5
+
+# renderer
+renderer:
+  target: 'RGBRenderer'
+rasterizing_downsample: 1 # saying to original resolution
+
+# loss
+log_gaussian_stats: true
+only_sup_foreground: false # ! foreground and background
+render_target_is_object: false 
+
+model: gsm

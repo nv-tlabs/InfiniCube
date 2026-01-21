@@ -1,0 +1,68 @@
+include_configs:
+  - ./train/gsm/gsm.yaml
+  - ./train/gsm/dual_branch_backbone.yaml
+  - dataset.yaml
+
+name: 'release/waymo_wds'
+
+# data
+train_kwargs:
+  wds_scene_list_file: 'infinicube/assets/waymo_split/official_train_static_scene.json'
+val_kwargs:
+  wds_scene_list_file: 'infinicube/assets/waymo_split/official_val_static_scene.json'
+
+_attr_subfolders: ['pose', 'pc_voxelsize_01', 'intrinsic', 'static_object_info',
+                  'dynamic_object_info', 'dynamic_object_points_canonical',
+                  'image_480p_front', 'skymask_480p_front',
+                   '3d_road_edge_voxelsize_025', '3d_road_line_voxelsize_025', '3d_road_surface_voxelsize_04']
+_fvdb_grid_type: 'vs02'
+finest_voxel_size_goal: 'vs02'
+_input_slect_ids: [0]
+_input_frame_offsets: [0,10,20,30]
+_sup_slect_ids: [0]
+_sup_frame_offsets: [0,2,5,7,10,12,15,17,20,22,25,27,30,32,35,37,40]
+_n_image_per_iter_sup: 9
+grid_crop_bbox_min: [0, -40, -12.8]
+grid_crop_bbox_max: [153.6, 40, 38.4]
+replace_all_car_with_cad: false # do not use CAD for gsm training
+
+
+# encoder module
+encoder:
+  resize_projection_input: false
+
+  encoder_modules: ['conv']
+
+  # conv encoder for image
+  conv_params:
+    n_filter_list: [3, 16, 32, 64]
+    n_stride_list: [1, 1, 1]
+    n_kernel_list: [3, 3, 3]
+    n_padding_list: [1, 1, 1]
+    n_residual_list: [false, true, true]
+    n_use_gn_list: [false, false, false]
+    conv_encoder_out_dim: 64
+
+# sky module
+use_skybox: true
+skybox_target: 'panorama_full'
+skybox_net: 'res-up4x-decode-3'
+skybox_feature_source: 'conv'
+skybox_resolution: 512
+skybox_in_dim: 64
+skybox_forward_sky_only: false # ! forward the whole image
+model_midground: false
+
+
+backbone:
+  params:
+    use_3d: true
+    use_2d: false
+
+render_weight: 1.0 
+alpha_weight: 1
+perceptual_weight: 0.5
+perceptual_start_epoch: 0
+use_ssim_loss: true
+perceputal_resize_height: 480
+supervise_image_resize: [480, 832]
