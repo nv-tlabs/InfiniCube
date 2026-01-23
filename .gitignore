@@ -58,9 +58,9 @@ uv.lock
 *.pt
 *.ckpt
 *.safetensors
-data/
-data_/
-data_sample/
+/data/
+/data_/
+/data_sample/
 outputs/
 logs/
 wandb/
@@ -77,3 +77,5 @@ checkpoints/
 visualization/
 
 .premature_checkpoints
+
+/models/
