@@ -77,7 +77,3 @@ checkpoints/
 visualization/
 
 .premature_checkpoints
-
-slurm/
-slurm_out/
-models/
